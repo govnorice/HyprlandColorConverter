@@ -14,7 +14,7 @@ Download executable file and move to /usr/bin:
 ```
 cd download_location
 
-sudo mv powerdialog /usr/bin/colorconvert
+sudo mv colorconvert /usr/bin/
 ```
 
 # HOW TO USE
