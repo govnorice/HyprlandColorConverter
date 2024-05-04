@@ -6,7 +6,7 @@ ___
 ## I USE ARCH LINUX BTW?
 Just install the package from the AUR, damn it!
 ```
-yay -S repackmanga
+yay -S colorconvert
 ```
 # OR
 Download executable file and move to /usr/bin:
