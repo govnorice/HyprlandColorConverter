@@ -1,17 +1,10 @@
 #include <gtk/gtk.h>
 
+#include "hex_table.hex"
+
 // HEX opacity table
 const gchar* alpha_to_hex(gdouble alpha) {
     guint alpha_hex = (guint)(alpha * 127 + 0.5);
-    static const gchar* alpha_hex_table[] = {
-        "00", "02", "04", "07", "09", "0B", "0E", "10", "12", "15", "17", "1A", "1C", "1E", "21", "23",
-        "25", "28", "2A", "2D", "2F", "31", "34", "36", "39", "3B", "3E", "40", "42", "45", "47", "4A",
-        "4C", "4E", "51", "53", "56", "58", "5A", "5D", "5F", "62", "64", "67", "69", "6C", "6E", "71",
-        "73", "75", "78", "7A", "7D", "7F", "82", "84", "87", "89", "8B", "8E", "90", "93", "95", "98",
-        "9A", "9C", "9F", "A1", "A4", "A6", "A9", "AB", "AE", "B0", "B3", "B5", "B7", "BA", "BC", "BF",
-        "C1", "C4", "C6", "C9", "CB", "CE", "D0", "D3", "D5", "D8", "DA", "DD", "DF", "E2", "E4", "E6",
-        "E9", "EB", "EE", "F0", "F3", "F5", "F8", "FA", "FD", "FF"
-    };
 
     if (alpha_hex >= 0 && alpha_hex < 128) {
         return alpha_hex_table[alpha_hex];
