@@ -12,4 +12,6 @@ include_directories(${GTK_INCLUDE_DIRS})
 link_libraries(${GTK_LIBRARIES})
 
 add_executable(colorconvert main.cpp
+                modules/CssManager.cpp
+                modules/CssManager.h
                 hex_table.hex)

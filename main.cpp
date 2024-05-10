@@ -4,9 +4,12 @@
 #include <sstream>
 #include <iomanip>
 
+#include "modules/CssManager.h"
 #include "hex_table.hex"
 
 using namespace std;
+
+const string homeDir = getenv("HOME");
 
 // HEX opacity table
 const gchar* alpha_to_hex(gdouble alpha) {
@@ -97,6 +100,12 @@ static void activate(GtkApplication* app, gpointer user_data) {
     gtk_box_pack_start(GTK_BOX(box), color_field, FALSE, FALSE, 0); // Добавляем метку в контейнер без расширения и выравнивания
     // container add to window
     gtk_container_add(GTK_CONTAINER(window), box);
+
+    //CSS
+    CssManager css;
+
+    string path = string(homeDir) + "/.config/colorconvert/style.css";
+    css.loadFromFile(path.c_str());
 
     gtk_widget_show_all(window);
 }
