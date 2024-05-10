@@ -1,6 +1,12 @@
+#include <iostream>
 #include <gtk/gtk.h>
+#include <string>
+#include <sstream>
+#include <iomanip>
 
 #include "hex_table.hex"
+
+using namespace std;
 
 // HEX opacity table
 const gchar* alpha_to_hex(gdouble alpha) {
@@ -14,24 +20,28 @@ const gchar* alpha_to_hex(gdouble alpha) {
 }
 
 // Color channel to HEX
-const gchar* channel_to_hex(gdouble channel) {
+string channel_to_hex(gdouble channel) {
     guint channel_hex = (guint)(channel * 255);
-    gchar *hex_str = g_strdup_printf("%02X", channel_hex);
-    return hex_str;
+    std::stringstream stream;
+
+    stream << uppercase << setfill('0') << setw(2) << hex << channel_hex;
+    return stream.str();
 }
 
 // RGBA to HEX with opacity
-const gchar* color_to_hex(const GdkRGBA *color) {
-    gchar *hex_str;
+string color_to_hex(const GdkRGBA *color) {
+    string hex_str;
     const gchar* alpha_hex = alpha_to_hex(color->alpha);
 
     if (alpha_hex != NULL) {
         // Color to HEX with opacity
-        hex_str = g_strdup_printf("0x%s%s%s%s", alpha_hex, channel_to_hex(color->red), channel_to_hex(color->green), channel_to_hex(color->blue));
+        hex_str = "0x" + string(alpha_hex) + channel_to_hex(color->red) +
+                  channel_to_hex(color->green) + channel_to_hex(color->blue);
     } else {
         // If transparency is outside the acceptable range, set it to 100%
         alpha_hex = "FF";
-        hex_str = g_strdup_printf("0x%s%s%s%s", alpha_hex, channel_to_hex(color->red), channel_to_hex(color->green), channel_to_hex(color->blue));
+        hex_str = "0x" + string(alpha_hex) + channel_to_hex(color->red) +
+                  channel_to_hex(color->green) + channel_to_hex(color->blue);
     }
     return hex_str;
 }
@@ -49,13 +59,10 @@ void color_dialog(GtkWidget *button, gpointer user_data) {
         gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(dialog), &color);
 
         // Color to HEX with opacity
-        const gchar* hex_color = color_to_hex(&color);
+        string hex_color = color_to_hex(&color);
 
         // Update label "color_field"
-        gtk_label_set_text(GTK_LABEL(color_field), hex_color);
-
-        // Clear RAM
-        g_free((gpointer)hex_color);
+        gtk_label_set_text(GTK_LABEL(color_field), hex_color.c_str());
     }
 
     gtk_widget_destroy(dialog);
